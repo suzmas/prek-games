@@ -21,7 +21,6 @@ function preload() {
     game.load.image('sky', 'assets/sky.png');
     game.load.image('ground', 'assets/platform.png');
     game.load.image('star', 'assets/flame.png');
-		// game.load.image('flame', 'assets/flame.png');
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 
 }
@@ -31,7 +30,7 @@ var platforms;
 var cursors;
 
 var stars;
-var score = 0;
+var score = 9;
 var scoreText;
 
 function create() {
@@ -63,6 +62,8 @@ function create() {
 
     ledge = platforms.create(-150, 250, 'ground');
     ledge.body.immovable = true;
+
+		ledge = platforms.create(50, 50, 'ground');
 
     // The player and its settings
     player = game.add.sprite(32, game.world.height - 150, 'dude');
@@ -103,7 +104,7 @@ function create() {
     }
 
     //  The score
-    scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+    scoreText = game.add.text(16, 16, 'Lives: 0', { fontSize: '32px', fill: '#000' });
 
     //  Our controls.
     cursors = game.input.keyboard.createCursorKeys();
@@ -156,12 +157,19 @@ function update() {
 
 function collectStar (player, star) {
 
+		console.log(star);
     // Removes the star from the screen
     star.kill();
 
     //  Add and update the score
-    score += 1;
-    scoreText.text = 'Flames: ' + score;
+    score -= 1;
+    scoreText.text = 'Lives: ' + score;
+
+		if (score <= 0) {
+			scoreText.text = "";
+			player.kill();
+			loseText = game.add.text(260, 260, 'GAME OVER', { fontSize: '102px', fill: 'red' });
+		}
 
 }
 
