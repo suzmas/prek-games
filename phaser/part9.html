@@ -22,7 +22,7 @@ function preload() {
     game.load.image('ground', 'assets/platform.png');
     game.load.image('star', 'assets/flame.png');
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
-		game.load.image('baddie', 'assets/baddie.png');
+		game.load.spritesheet('baddie', 'assets/baddie.png', 32, 32);
 
 }
 
@@ -107,6 +107,9 @@ function create() {
 
 		for (var i=0; i<5; i++) {
 			var baddie = game.add.sprite(i*6, game.world.height - 150, 'baddie');
+
+			baddie.animations.add('left', [0, 1], 4, true);
+			baddie.animations.add('right', [2, 3], 4, true);
 
 		}
 
