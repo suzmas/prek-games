@@ -22,7 +22,7 @@ function preload() {
     game.load.image('ground', 'assets/platform.png');
     game.load.image('star', 'assets/flame.png');
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
-		game.load.spritesheet('baddie', 'assets/baddie.png', 32, 32);
+		game.load.spritesheet('cat', 'assets/runningcat.png', 32, 50);
 
 }
 
@@ -65,11 +65,9 @@ function create() {
     ledge = platforms.create(-150, 250, 'ground');
     ledge.body.immovable = true;
 
-		ledge = platforms.create(50, 50, 'ground');
-
     // The player and its settings
     player = game.add.sprite(32, game.world.height - 150, 'dude');
-
+		game.add.sprite(50, 50, 'cat')
     //  We need to enable physics on the player
     game.physics.arcade.enable(player);
 
@@ -102,16 +100,11 @@ function create() {
     }
 
 		// add some bad guys
-		baddies = game.add.group();
-		baddies.enableBody = true;
-
-		for (var i=0; i<5; i++) {
-			var baddie = game.add.sprite(i*6, game.world.height - 150, 'baddie');
-
-			baddie.animations.add('left', [0, 1], 4, true);
-			baddie.animations.add('right', [2, 3], 4, true);
-
-		}
+		kitten = game.add.sprite(100, 100, 'cat');
+		game.physics.arcade.enable(kitten);
+		kitten.body.collideWorldBounds = true;
+		kitten.animations.add('left', [0, 1, 2, 3], 10, true);
+		kitten.animations.add('right', [5, 6, 7, 8], 10, true);
 
     //  The score
     scoreText = game.add.text(16, 16, 'Lives: 9', { fontSize: '32px', fill: '#000' });
